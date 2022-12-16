@@ -54,23 +54,21 @@ def infer(model: Model, fn_img: Path) -> None:
     print(f'Probability: {probability[0]}')
     print("After Sentence checking...")
     corrected_spelling = TextBlob(recognized[0])
-    print("Corrected sentence:", corrected_spelling.correct())
+    return corrected_spelling.correct()
 
 @app.route("/", methods=['GET', 'POST'])
 def show_page():
     if request.method == 'POST':
         if 'file1' not in request.files:
-            return render_template('index.html',status='there is no file1 in form!')
+            return render_template('index.html',status='there is no file1 in form!',result='')
         file1 = request.files['file1']
-        path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
-        file1.save(path)
-        model = Model(char_list_from_file(), 0, must_restore=True, dump=False)
-        infer(model, path)
-
-        return render_template('index.html',status='File Uploaded Successfully')
-        # try:
-            
-        # except:
-        #     return render_template('index.html',status='Please Upload the file Properly')
+        try:
+            path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+            file1.save(path)
+            model = Model(char_list_from_file(), 0, must_restore=True, dump=False)
+            res = infer(model, path)
+            return render_template('index.html',status='File Uploaded Successfully',result="Sentence Predicted from Image: {0}".format(res))
+        except:
+            return render_template('index.html',status='Please Upload the file Properly')
     
-    return render_template('index.html',status='Upload a File')
+    return render_template('index.html',status='Upload a File',result='')
