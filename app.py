@@ -5,4 +5,4 @@ app = Flask(__name__)
 
 @app.route("/")
 def show_page():
-    return render_template()
+    return render_template('index.html')
