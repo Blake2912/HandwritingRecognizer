@@ -12,7 +12,7 @@ The model takes **images of single words or text lines (multiple words) as input
 
 * Create a virtual environment using the command
 ```
-python -m venv <name_of_env>
+python3 -m venv <name_of_env>
 ```
 * After creating the virtual environment add the folder name to `.gitignore` file
 
@@ -21,6 +21,16 @@ python -m venv <name_of_env>
 For MacOS and Linux based systems
 ```
 source path/to/env/bin/activate
+```
+
+For Windows (Command Prompt)
+```
+<venv>\Scripts\activate.bat
+```
+
+For Windows (Power Shell)
+```
+<venv>\Scripts\Activate.ps1
 ```
 
 * After activation of the virtual environment, install the dependencies using the command
